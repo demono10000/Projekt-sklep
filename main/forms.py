@@ -47,4 +47,11 @@ class PlaceOrderForm(forms.ModelForm):
         order.user_id = self.user.id
         if commit:
             order.save()
+            wallet = Wallet.objects.get(user=self.user)
+            wallet.balance -= order.price
+            wallet.save()
         return order
+
+    def user_have_enough_money(self):
+        wallet = Wallet.objects.get(user=self.user)
+        return wallet.balance >= self.cleaned_data["service"].price * self.cleaned_data["quantity"]

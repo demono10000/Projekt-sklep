@@ -54,8 +54,10 @@ def order_request(request):
         return redirect("main:login")
     if request.method == "POST":
         form = PlaceOrderForm(request.user, request.POST)
-        print(form.errors)
         if form.is_valid():
+            if not form.user_have_enough_money():
+                messages.error(request, "You don't have enough money to place this order.")
+                return redirect("main:order")
             form.save()
             messages.success(request, "Order placed successfully.")
             return redirect("main:homepage")
