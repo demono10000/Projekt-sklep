@@ -49,6 +49,9 @@ def logout_request(request):
 
 
 def order_request(request):
+    if not request.user.is_authenticated:
+        messages.error(request, "You must be logged in to place an order.")
+        return redirect("main:login")
     if request.method == "POST":
         form = PlaceOrderForm(request.user, request.POST)
         print(form.errors)
