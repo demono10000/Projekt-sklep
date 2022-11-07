@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import UserRegisterForm
+from .forms import UserRegisterForm, PlaceOrderForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
@@ -46,3 +46,17 @@ def logout_request(request):
     logout(request)
     messages.info(request, "You have successfully logged out.")
     return redirect("main:homepage")
+
+
+def order_request(request):
+    if request.method == "POST":
+        form = PlaceOrderForm(request.user, request.POST)
+        print(form.errors)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Order placed successfully.")
+            return redirect("main:homepage")
+        messages.error(request, "Unsuccessful order. Invalid information.")
+    form = PlaceOrderForm(request.user)
+    return render(request=request,
+                  template_name="main/order.html", context={"order_form": form})

@@ -16,7 +16,7 @@ class Order(models.Model):
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     service = models.ForeignKey(Service, on_delete=models.CASCADE)
     quantity = models.IntegerField()
-    url = models.URLField(max_length=200, null=True, blank=True)
+    url = models.URLField(max_length=200)
     date = models.DateField()
     price = models.FloatField()
     completed = models.BooleanField(default=False)
