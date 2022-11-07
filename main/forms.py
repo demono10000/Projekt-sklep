@@ -4,7 +4,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
-from main.models import Order, Service
+from main.models import Order, Service, Wallet
 
 
 class UserRegisterForm(UserCreationForm):
@@ -19,6 +19,8 @@ class UserRegisterForm(UserCreationForm):
         user.email = self.cleaned_data["email"]
         if commit:
             user.save()
+        wallet = Wallet(user=user)
+        wallet.save()
         return user
 
 

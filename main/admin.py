@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from main.models import Service, Order
+from main.models import Service, Order, Wallet
 
 
 class ServiceAdmin(admin.ModelAdmin):
@@ -21,3 +21,13 @@ class OrderAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Order, OrderAdmin)
+
+
+class WalletAdmin(admin.ModelAdmin):
+    list_display = ['user', 'balance']
+    list_filter = ['user', 'balance']
+    search_fields = ['user', 'balance']
+    list_per_page = 25
+
+
+admin.site.register(Wallet, WalletAdmin)
