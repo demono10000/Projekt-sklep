@@ -29,7 +29,7 @@ class Order(models.Model):
 
 class Wallet(models.Model):
     user = models.OneToOneField('auth.User', on_delete=models.CASCADE, primary_key=True)
-    balance = models.FloatField(default=0)
+    balance = models.DecimalField(default=0, decimal_places=2, max_digits=10)
 
     def __str__(self):
         return self.user.username + ': ' + str(self.balance)
