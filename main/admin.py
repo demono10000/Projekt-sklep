@@ -27,16 +27,12 @@ class WalletAdmin(admin.ModelAdmin):
     list_per_page = 25
 
 
-# paid orders, but not completed
 @admin.register(OrderProxy)
 class PendingOrdersAdmin(admin.ModelAdmin):
-    # allow only for editing completed field
     list_display = ['id', 'user', 'service', 'quantity', 'url', 'paidDate', 'price', 'completed', 'paid']
     list_filter = ['user', 'service', 'quantity', 'url', 'paidDate', 'price', 'completed', 'paid']
     search_fields = ['user', 'service', 'quantity', 'url', 'paidDate', 'price', 'completed', 'paid']
     list_per_page = 25
 
-
     def get_queryset(self, request):
-        return Order.objects.filter(paid=True, completed=False)
-
+        return Order.objects.filter(paid=True, completed=False).order_by('paidDate')
