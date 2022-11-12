@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import UserRegisterForm, SelectServiceForm, CompleteOrderForm
+from .forms import UserRegisterForm, SelectServiceForm, CompleteOrderForm, ChargeWalletForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
@@ -124,3 +124,19 @@ def order_confirm(request):
         return redirect("main:homepage")
     return render(request=request,
                   template_name="main/orderSummary.html", context={"orderData": order})
+
+
+def charge_wallet_request(request):
+    if not request.user.is_authenticated:
+        messages.error(request, "You must be logged in to charge your wallet.")
+        return redirect("main:login")
+    if request.method == "POST":
+        form = ChargeWalletForm(request.user, request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Wallet charged successfully.")
+            return redirect("main:homepage")
+        messages.error(request, "Unsuccessful charge. Invalid information.")
+    form = ChargeWalletForm(request.user)
+    return render(request=request,
+                  template_name="main/chargeWallet.html", context={"form": form})

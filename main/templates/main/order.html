@@ -5,13 +5,11 @@
 
 {% load crispy_forms_tags %}
 
-<!--Login--> 
 <div class="container py-5">
   <h1>Place order</h1>
   <form method="POST">
     {% csrf_token %}
     {% if service is not null %}
-        <!--Write service name-->
         <div class="form-group">
             <label for="service">Service name</label>
             <input type="text" class="form-control" id="service" name="service" value="{{service}}" readonly>
@@ -20,7 +18,6 @@
       {% if description is not null %}
         <div class="form-group">
           <label for="description">Description</label>
-            <!--lock edit-->
           <textarea class="form-control" id="description" name="description" rows="3" disabled>{{ description }}</textarea>
         </div>
       {% endif %}

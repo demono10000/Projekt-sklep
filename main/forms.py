@@ -71,3 +71,22 @@ class SelectServiceForm(forms.ModelForm):
         if commit:
             order.save()
         return order
+
+
+class ChargeWalletForm(forms.ModelForm):
+    amount = forms.DecimalField(decimal_places=2, max_digits=10)
+
+    class Meta:
+        model = Wallet
+        fields = ['amount']
+
+    def __init__(self, user, *args, **kwargs):
+        self.user = user
+        super(ChargeWalletForm, self).__init__(*args, **kwargs)
+
+    def save(self, commit=True):
+        wallet = Wallet.objects.get(user=self.user)
+        wallet.balance += self.cleaned_data["amount"]
+        if commit:
+            wallet.save()
+        return wallet
