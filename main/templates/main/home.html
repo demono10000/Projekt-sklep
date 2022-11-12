@@ -15,5 +15,16 @@
             </div>
         </div>
     </div>
+  {% else %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <a href="/login" class="btn btn-primary btn-lg btn-block">Login</a>
+            </div>
+            <div class="col-md-4">
+                <a href="/register" class="btn btn-primary btn-lg btn-block">Register</a>
+            </div>
+        </div>
+    </div>
   {% endif %}
   {% endblock %}
