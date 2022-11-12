@@ -63,7 +63,7 @@ def order_request(request):
                 return redirect("main:order")
             if not form.user_have_enough_money(Order.objects.get(user=request.user, paid=False).service, form.cleaned_data.get('quantity')):
                 messages.error(request, "You don't have enough money to place this order.")
-                return redirect("main:order")
+                return redirect("main:charge_wallet")
             form.save()
             return redirect("main:confirm")
         form = SelectServiceForm(request.user, request.POST)
@@ -115,7 +115,7 @@ def order_confirm(request):
         wallet = Wallet.objects.get(user=request.user)
         if order.quantity * order.service.price > wallet.balance:
             messages.error(request, "You don't have enough money to place this order.")
-            return redirect("main:order")
+            return redirect("main:charge_wallet")
         wallet.balance -= order.service.price * order.quantity
         wallet.save()
         order.paid = True
@@ -133,6 +133,9 @@ def charge_wallet_request(request):
     if request.method == "POST":
         form = ChargeWalletForm(request.user, request.POST)
         if form.is_valid():
+            if form.cleaned_data.get('amount') <= 0:
+                messages.error(request, "You must charge more than 0$.")
+                return redirect("main:charge_wallet")
             form.save()
             messages.success(request, "Wallet charged successfully.")
             return redirect("main:homepage")
