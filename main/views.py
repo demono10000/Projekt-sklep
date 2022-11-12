@@ -146,3 +146,26 @@ def charge_wallet_request(request):
     form = ChargeWalletForm(request.user)
     return render(request=request,
                   template_name="main/chargeWallet.html", context={"form": form})
+
+
+def check_order_status_request(request):
+    if not request.user.is_authenticated:
+        messages.error(request, "You must be logged in to check your orders.")
+        return redirect("main:login")
+    orders = Order.objects.filter(user=request.user, paid=True).order_by('-paidDate')
+    return render(request=request,
+                  template_name="main/myOrder.html", context={"orders": orders})
+
+
+def order_details_request(request, order_id):
+    if not request.user.is_authenticated:
+        messages.error(request, "You must be logged in to check your orders.")
+        return redirect("main:login")
+    # get order id from url
+    order = Order.objects.filter(user=request.user, paid=True, id=order_id)
+    if order is None:
+        messages.error(request, "Invalid order.")
+        return redirect("main:my_orders")
+    order = order.first()
+    return render(request=request,
+                  template_name="main/orderInfo.html", context={"order": order})
