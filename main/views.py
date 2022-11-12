@@ -1,3 +1,5 @@
+import datetime
+
 from django.shortcuts import render, redirect
 from .forms import UserRegisterForm, SelectServiceForm, CompleteOrderForm, ChargeWalletForm
 from django.contrib.auth import login, authenticate, logout
@@ -119,6 +121,7 @@ def order_confirm(request):
         wallet.balance -= order.service.price * order.quantity
         wallet.save()
         order.paid = True
+        order.paidDate = datetime.datetime.now()
         order.save()
         messages.success(request, "Order placed successfully.")
         return redirect("main:homepage")
