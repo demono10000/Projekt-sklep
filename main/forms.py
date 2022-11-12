@@ -24,34 +24,50 @@ class UserRegisterForm(UserCreationForm):
         return user
 
 
-class PlaceOrderForm(forms.ModelForm):
-    service = forms.ModelChoiceField(queryset=Service.objects.all())
+class CompleteOrderForm(forms.ModelForm):
+    # service = forms.ModelChoiceField(queryset=Service.objects.all())
     quantity = forms.IntegerField()
     url = forms.URLField(max_length=200, required=True)
 
     def __init__(self, user, *args, **kwargs):
         self.user = user
-        super(PlaceOrderForm, self).__init__(*args, **kwargs)
+        super(CompleteOrderForm, self).__init__(*args, **kwargs)
 
     class Meta:
         model = Order
-        fields = ['service', 'quantity', 'url']
+        fields = ['quantity', 'url']
 
     def save(self, commit=True):
-        order = super(PlaceOrderForm, self).save(commit=False)
-        order.service = self.cleaned_data["service"]
+        order = Order.objects.get(user=self.user, paid=False)
+        # order.service = self.cleaned_data["service"]
         order.quantity = self.cleaned_data["quantity"]
         order.url = self.cleaned_data["url"]
         order.date = datetime.date(datetime.now())
         order.price = order.service.price * order.quantity
-        order.user_id = self.user.id
+        # order.user_id = self.user.id
         if commit:
             order.save()
-            wallet = Wallet.objects.get(user=self.user)
-            wallet.balance -= order.price
-            wallet.save()
         return order
 
-    def user_have_enough_money(self):
+    def user_have_enough_money(self, service, quantity):
         wallet = Wallet.objects.get(user=self.user)
-        return wallet.balance >= self.cleaned_data["service"].price * self.cleaned_data["quantity"]
+        return wallet.balance >= service.price * quantity
+
+
+class SelectServiceForm(forms.ModelForm):
+    service = forms.ModelChoiceField(queryset=Service.objects.all())
+
+    class Meta:
+        model = Order
+        fields = ['service']
+
+    def __init__(self, user, *args, **kwargs):
+        self.user = user
+        super(SelectServiceForm, self).__init__(*args, **kwargs)
+
+    def save(self, commit=True):
+        order = super(SelectServiceForm, self).save(commit=False)
+        order.service = self.cleaned_data["service"]
+        if commit:
+            order.save()
+        return order

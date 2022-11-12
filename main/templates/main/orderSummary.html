@@ -1,0 +1,23 @@
+{% extends "main/header.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}      
+
+{% load crispy_forms_tags %}
+
+<!--Login--> 
+<div class="container py-5">
+  <h1>Place order</h1>
+  <form method="POST">
+    {% csrf_token %}
+    <ul>
+        <li>Service name: {{ orderData.service }}</li>
+        <li>Service description: {{ orderData.service.description }}</li>
+        <li>Service quantity: {{ orderData.quantity }}</li>
+        <li>Service price: {{ orderData.price }}</li>
+    </ul>
+    <button type="submit" class="btn btn-primary">Confirm</button>
+  </form>
+</div>
+
+{% endblock %}

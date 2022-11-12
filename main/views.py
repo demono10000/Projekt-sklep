@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
-from .forms import UserRegisterForm, PlaceOrderForm
+from .forms import UserRegisterForm, SelectServiceForm, CompleteOrderForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
+
+from .models import Order, Wallet
 
 
 def homepage(request):
@@ -53,15 +55,72 @@ def order_request(request):
         messages.error(request, "You must be logged in to place an order.")
         return redirect("main:login")
     if request.method == "POST":
-        form = PlaceOrderForm(request.user, request.POST)
+        form = CompleteOrderForm(request.user, request.POST)
         if form.is_valid():
-            if not form.user_have_enough_money():
+            print('valid')
+            if form.cleaned_data.get('quantity') <= 0:
+                messages.error(request, "You must order at least 1 service.")
+                return redirect("main:order")
+            if not form.user_have_enough_money(Order.objects.get(user=request.user, paid=False).service, form.cleaned_data.get('quantity')):
                 messages.error(request, "You don't have enough money to place this order.")
                 return redirect("main:order")
             form.save()
-            messages.success(request, "Order placed successfully.")
-            return redirect("main:homepage")
+            return redirect("main:confirm")
+        form = SelectServiceForm(request.user, request.POST)
+        if not form.is_valid():
+            messages.error(request, "Invalid information.")
+            return redirect("main:order")
+        if form.cleaned_data.get('service') is not None:
+            order = Order.objects.filter(user=request.user, paid=False)
+            if order.exists():
+                order = order.first()
+                order.service = form.cleaned_data.get('service')
+                order.save()
+            else:
+                order = Order(user=request.user, service=form.cleaned_data.get('service'))
+                order.save()
+            form_new = CompleteOrderForm(request.user)
+            form_new.fields['quantity'].initial = 1
+            form_new.fields['quantity'].widget.attrs['min'] = 1
+            return render(request=request,
+                          template_name="main/order.html", context={"order_form": form_new,
+                                                                    "description": form.cleaned_data.get(
+                                                                        'service').description,
+                                                                    "service": order.service})
         messages.error(request, "Unsuccessful order. Invalid information.")
-    form = PlaceOrderForm(request.user)
+    form = SelectServiceForm(request.user)
     return render(request=request,
                   template_name="main/order.html", context={"order_form": form})
+
+
+def order_confirm(request):
+    if not request.user.is_authenticated:
+        messages.error(request, "You must be logged in to place an order.")
+        return redirect("main:login")
+    order = Order.objects.filter(user=request.user, paid=False)
+    if not order.exists():
+        messages.error(request, "You must select a service to place an order.")
+        return redirect("main:order")
+    order = order.first()
+    if request.method == "POST":
+        if order.service is None:
+            messages.error(request, "You must select a service first.")
+            return redirect("main:order")
+        if order.url is None:
+            messages.error(request, "You must enter a URL first.")
+            return redirect("main:order")
+        if order.quantity <= 0:
+            messages.error(request, "You must order at least 1 service.")
+            return redirect("main:order")
+        wallet = Wallet.objects.get(user=request.user)
+        if order.quantity * order.service.price > wallet.balance:
+            messages.error(request, "You don't have enough money to place this order.")
+            return redirect("main:order")
+        wallet.balance -= order.service.price * order.quantity
+        wallet.save()
+        order.paid = True
+        order.save()
+        messages.success(request, "Order placed successfully.")
+        return redirect("main:homepage")
+    return render(request=request,
+                  template_name="main/orderSummary.html", context={"orderData": order})

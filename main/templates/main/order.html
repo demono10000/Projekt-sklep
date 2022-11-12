@@ -10,10 +10,22 @@
   <h1>Place order</h1>
   <form method="POST">
     {% csrf_token %}
+    {% if service is not null %}
+        <!--Write service name-->
+        <div class="form-group">
+            <label for="service">Service name</label>
+            <input type="text" class="form-control" id="service" name="service" value="{{service}}" readonly>
+    {% endif %}
     {{ order_form|crispy }}
+      {% if description is not null %}
+        <div class="form-group">
+          <label for="description">Description</label>
+            <!--lock edit-->
+          <textarea class="form-control" id="description" name="description" rows="3" disabled>{{ description }}</textarea>
+        </div>
+      {% endif %}
     <button type="submit" class="btn btn-primary">Place order</button>
   </form>
-  <p class="text-center">Don't have an account? <a href="/register">Create an account</a>.</p>
 </div>
 
 {% endblock %}
