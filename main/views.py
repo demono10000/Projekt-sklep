@@ -1,11 +1,9 @@
-import datetime
-
+from django.utils import timezone
 from django.shortcuts import render, redirect
 from .forms import UserRegisterForm, SelectServiceForm, CompleteOrderForm, ChargeWalletForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
-
 from .models import Order, Wallet
 
 
@@ -121,7 +119,7 @@ def order_confirm(request):
         wallet.balance -= order.service.price * order.quantity
         wallet.save()
         order.paid = True
-        order.paidDate = datetime.datetime.now()
+        order.paidDate = timezone.now()
         order.save()
         messages.success(request, "Order placed successfully.")
         return redirect("main:homepage")
