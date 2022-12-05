@@ -84,7 +84,8 @@ def order_request(request):
             form_new.fields['quantity'].widget.attrs['min'] = 1
             return render(request=request,
                           template_name="main/order.html", context={"order_form": form_new,
-                                                                    "description": form.cleaned_data.get(
+                                                                    "description": str(form.cleaned_data.get(
+                                                                        'service').price) + " PLN\n" + form.cleaned_data.get(
                                                                         'service').description + "\nSample URL: " + form.cleaned_data.get( 'service').sampleURL,
                                                                     "service": order.service})
         messages.error(request, "Unsuccessful order. Invalid information.")
