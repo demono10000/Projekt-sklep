@@ -85,7 +85,7 @@ def order_request(request):
             return render(request=request,
                           template_name="main/order.html", context={"order_form": form_new,
                                                                     "description": form.cleaned_data.get(
-                                                                        'service').description,
+                                                                        'service').description + "\nSample URL: " + form.cleaned_data.get( 'service').sampleURL,
                                                                     "service": order.service})
         messages.error(request, "Unsuccessful order. Invalid information.")
     form = SelectServiceForm(request.user)
