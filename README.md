@@ -22,6 +22,7 @@ W przypadku kożystania z hostowanej strony należy:
 2. Zalogować się danymi: login: admin, hasło: admin
 
 W panelu można dodawać nowe usługi w zakładce "Services" (ścieżka: /admin/main/service/) po naciśnięciu przycisku ADD SERVICE
+
 ![add](https://user-images.githubusercontent.com/48636182/206041383-9e40434c-3373-4ea9-a37f-74209385cf15.png)
 
 Otwiera się wtedy formularz w którym należy uzupełnić informacje dotyczące nowej usługi
