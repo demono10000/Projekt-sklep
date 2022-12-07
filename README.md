@@ -7,7 +7,7 @@ Uruchomienie projektu
 Aby uruchomić projekt należy wykonać następujące kroki:
 1. Pobrać projekt z repozytorium
 2. Otworzyć konsolę w folderze z projektem
-3. Wykonać komendę "python manage.py runserver"
+3. Wykonać komendę ```python manage.py runserver```
 
 Alternatywnie można przetestować działanie aplikacji na stronie: http://demono10000.eu.pythonanywhere.com/
 
@@ -33,6 +33,8 @@ W panelu można również zobaczyć wszystkie zamówienia w zakładce "Orders" (
 
 ![image](https://user-images.githubusercontent.com/48636182/206170153-e835bd7b-d840-4562-8e1f-6ba8e426ed20.png)
 
+W panelu administratora można oprócz dodawania i odzczytu rekordów z bazy danych, również edytować i usuwać dane.
+
 Interfejs użytkownika
 ---------------------
 Aby użytkownik mógł korzystać z serwisu musi stworzyć konto i się na nie zalogować. Niezalogowany użytkownik ma zablokowany dostęp do wszystkich funkcjonalności serwisu oprócz rejestracji i logowania.
@@ -52,3 +54,21 @@ Następnie użytkownik może już zakupić usługę, która jest dostępna w ser
 ![image](https://user-images.githubusercontent.com/48636182/206173066-57ecea2e-c6e7-42fc-b7ec-f0748a8d8c9e.png)
 
 ![image](https://user-images.githubusercontent.com/48636182/206173118-c90eee61-ed8d-4d57-a2a5-fdc8466c9c8f.png)
+
+Backend
+-------
+Drzewo katalogów projektu:
+
+![image](https://user-images.githubusercontent.com/48636182/206174662-be2deeaf-0a96-47d4-8b7c-9498a19e2a5e.png)
+
+Modele
+
+![image](https://user-images.githubusercontent.com/48636182/206174907-3b64edc2-1111-4c54-af9e-d6ef04273290.png)
+
+Adresy URL
+
+![image](https://user-images.githubusercontent.com/48636182/206175048-f63bcf82-9388-42fc-97eb-2da55471a7ed.png)
+
+Przykładowe testy
+
+![image](https://user-images.githubusercontent.com/48636182/206175474-bdcdcd11-e16f-4a48-9011-970c20b6b8e8.png)
