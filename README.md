@@ -28,3 +28,27 @@ W panelu można dodawać nowe usługi w zakładce "Services" (ścieżka: /admin/
 Otwiera się wtedy formularz w którym należy uzupełnić informacje dotyczące nowej usługi
 
 ![ss2](https://user-images.githubusercontent.com/48636182/206041779-b3bc6915-3c1b-4441-8262-7542b1c75369.png)
+
+W panelu można również zobaczyć wszystkie zamówienia w zakładce "Orders" (ścieżka: /admin/main/order/), oraz zamówienia, które nie zostały jeszcze zrealizowane w zakładce "Pending orders" (ścieżka: /admin/main/orderproxy/)
+
+![image](https://user-images.githubusercontent.com/48636182/206170153-e835bd7b-d840-4562-8e1f-6ba8e426ed20.png)
+
+Interfejs użytkownika
+---------------------
+Aby użytkownik mógł korzystać z serwisu musi stworzyć konto i się na nie zalogować. Niezalogowany użytkownik ma zablokowany dostęp do wszystkich funkcjonalności serwisu oprócz rejestracji i logowania.
+
+![image](https://user-images.githubusercontent.com/48636182/206172196-71cb367c-7768-420b-a943-0cb2104056d4.png)
+
+Po zalogowaniu użytkownik ma opcję doładowania swojego konta, aby móc dokonywać płatności za usługi.
+
+![image](https://user-images.githubusercontent.com/48636182/206172586-341ac62d-28da-4b39-b23c-c018d01ab09f.png)
+
+Następnie użytkownik może już zakupić usługę, która jest dostępna w serwisie.
+
+![image](https://user-images.githubusercontent.com/48636182/206172776-e8d2fe52-a823-4969-bb0d-28b29fc3d687.png)
+
+![image](https://user-images.githubusercontent.com/48636182/206172977-7afafe9c-c4f1-4ab2-a1b8-bd8b217a03ab.png)
+
+![image](https://user-images.githubusercontent.com/48636182/206173066-57ecea2e-c6e7-42fc-b7ec-f0748a8d8c9e.png)
+
+![image](https://user-images.githubusercontent.com/48636182/206173118-c90eee61-ed8d-4d57-a2a5-fdc8466c9c8f.png)
