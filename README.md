@@ -33,7 +33,7 @@ W panelu można również zobaczyć wszystkie zamówienia w zakładce "Orders" (
 
 ![image](https://user-images.githubusercontent.com/48636182/206170153-e835bd7b-d840-4562-8e1f-6ba8e426ed20.png)
 
-W panelu administratora można oprócz dodawania i odzczytu rekordów z bazy danych, również edytować i usuwać dane.
+W panelu administratora można oprócz dodawania i odczytu rekordów z bazy danych, również edytować i usuwać dane.
 
 Interfejs użytkownika
 ---------------------
@@ -72,6 +72,8 @@ Adresy URL
 Przykładowe testy
 
 ![image](https://user-images.githubusercontent.com/48636182/206175474-bdcdcd11-e16f-4a48-9011-970c20b6b8e8.png)
+
+Wszystkie testy znajdują się w folderze tests https://github.com/demono10000/Projekt-sklep/tree/master/tests
 
 Baza danych db.sqlite3
 
