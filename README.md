@@ -75,6 +75,8 @@ Przykładowe testy
 
 Wszystkie testy znajdują się w folderze tests https://github.com/demono10000/Projekt-sklep/tree/master/tests
 
+Testy wykonuje się poprzez komendę ```python manage.py test```
+
 Baza danych db.sqlite3
 
 ![image](https://user-images.githubusercontent.com/48636182/206176266-d87e28bd-6b43-445e-88f7-266e45617fea.png)
