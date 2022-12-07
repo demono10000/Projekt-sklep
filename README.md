@@ -72,3 +72,11 @@ Adresy URL
 Przykładowe testy
 
 ![image](https://user-images.githubusercontent.com/48636182/206175474-bdcdcd11-e16f-4a48-9011-970c20b6b8e8.png)
+
+Baza danych db.sqlite3
+
+![image](https://user-images.githubusercontent.com/48636182/206176266-d87e28bd-6b43-445e-88f7-266e45617fea.png)
+
+Obsługa zapytań, walidacja danych, obsługa wyjątków i zwracanie danych odbywa się w pliku views.py (/main/views.py)
+
+https://github.com/demono10000/Projekt-sklep/blob/master/main/views.py
